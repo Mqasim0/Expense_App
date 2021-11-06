@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {COLORS, FONTS, SIZES, icons} from '../constants/index';
 
 import NavbarSection from '../Components/NavbarSection';
 import Header from '../Components/Header';
+import Category from '../Components/Category';
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       {/* navbar section */}
       <NavbarSection />
       <Header />
+      <Category />
     </View>
   );
 };
