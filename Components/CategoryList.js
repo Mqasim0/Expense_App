@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import {COLORS, FONTS, SIZES, icons} from '../constants/index';
+import IncomingExpenses from './IncomingExpenses';
 
 const CategoryList = ({list}) => {
   const categoryListHeightAnimatedValue = useRef(
@@ -17,6 +18,9 @@ const CategoryList = ({list}) => {
   ).current;
   const [selectCategory, setSelectCategory] = useState(null);
   const [showMoreToogle, setShowMoreToogle] = useState(false);
+  // let allExpenses = selectCategory ? selectCategory.expenses : [];
+
+  // let incomingExpenses = allExpenses.filter(a => a.status == 'P');
 
   const renderItem = ({item}) => {
     return (
@@ -32,40 +36,43 @@ const CategoryList = ({list}) => {
     );
   };
   return (
-    <View style={styles.container}>
-      <Animated.View style={{height: categoryListHeightAnimatedValue}}>
-        <FlatList
-          data={list}
-          renderItem={renderItem}
-          keyExtractor={item => `${item.id}`}
-          numColumns={2}
-        />
-      </Animated.View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          if (showMoreToogle) {
-            Animated.timing(categoryListHeightAnimatedValue, {
-              toValue: 115,
-              duration: 300,
-              useNativeDriver: false,
-            }).start();
-          } else {
-            Animated.timing(categoryListHeightAnimatedValue, {
-              toValue: 172.5,
-              duration: 300,
-              useNativeDriver: false,
-            }).start();
-          }
-          setShowMoreToogle(!showMoreToogle);
-        }}>
-        <Text style={styles.more}>{showMoreToogle ? 'LESS' : 'MORE'}</Text>
-        <Image
-          source={showMoreToogle ? icons.up_arrow : icons.down_arrow}
-          style={styles.image01}
-        />
-      </TouchableOpacity>
-    </View>
+    <>
+      <View style={styles.container}>
+        <Animated.View style={{height: categoryListHeightAnimatedValue}}>
+          <FlatList
+            data={list}
+            renderItem={renderItem}
+            keyExtractor={item => `${item.id}`}
+            numColumns={2}
+          />
+        </Animated.View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            if (showMoreToogle) {
+              Animated.timing(categoryListHeightAnimatedValue, {
+                toValue: 115,
+                duration: 300,
+                useNativeDriver: false,
+              }).start();
+            } else {
+              Animated.timing(categoryListHeightAnimatedValue, {
+                toValue: 172.5,
+                duration: 300,
+                useNativeDriver: false,
+              }).start();
+            }
+            setShowMoreToogle(!showMoreToogle);
+          }}>
+          <Text style={styles.more}>{showMoreToogle ? 'LESS' : 'MORE'}</Text>
+          <Image
+            source={showMoreToogle ? icons.up_arrow : icons.down_arrow}
+            style={styles.image01}
+          />
+        </TouchableOpacity>
+      </View>
+      <IncomingExpenses select={selectCategory} />
+    </>
   );
 };
 
